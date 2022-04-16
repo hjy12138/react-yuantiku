@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 export default class App extends Component {
   render() {
     return (
-      <Button variant="contained" color="primary">你好，世界</Button>
+      <Button variant="contained" color="primary">你好世界</Button>
     )
   }
 }
