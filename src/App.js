@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-import Button from '@material-ui/core/Button';
 
+import './App.less'
+import MyAlert from './components/MyAlert/MyAlert'
 export default class App extends Component {
   render() {
     return (
-      <Button variant="contained" color="primary">你好世界</Button>
+      
+      <div>
+        <MyAlert />
+        {this.props.children}
+      </div>
     )
   }
 }

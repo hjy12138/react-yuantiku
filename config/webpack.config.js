@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
+
+
 const resolve = require('resolve');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -17,6 +19,9 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
+// 引入 postcss-px2rem 
+const px2rem = require('postcss-px2rem')
+
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
@@ -71,6 +76,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessModuleRegex = /\.less$/;
+
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -143,6 +150,15 @@ module.exports = function (webpackEnv) {
                       stage: 3,
                     },
                   ],
+                  [
+                    'postcss-pxtorem',
+                    {
+                      rootValue: 112.5,
+                      selectorBlackList: [],
+                      propList: ['*'],
+                      exclude: /node_modules/i
+                    }
+                  ],
                   // Adds PostCSS Normalize as the reset css with default options,
                   // so that it honors browserslist config in package.json
                   // which in turn let's users customize the target behavior as per their needs.
@@ -160,6 +176,15 @@ module.exports = function (webpackEnv) {
                       stage: 3,
                     },
                   ],
+                  [
+                    'postcss-pxtorem',
+                    {
+                      rootValue: 112.5,
+                      selectorBlackList: [],
+                      propList: ['*'],
+                      exclude: /node_modules/i
+                    }
+                  ]
                 ],
           },
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
@@ -310,6 +335,7 @@ module.exports = function (webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
+        '@': path.join(__dirname, '../src'),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
@@ -541,6 +567,15 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 'sass-loader'
+              ),
+            },
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                  {
+                      //暂不配置
+                  },
+                  'less-loader'
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
