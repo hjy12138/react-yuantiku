@@ -9,3 +9,6 @@ body {
   font-family: NotoSansHans;
   color: #333333;
 }
+a {
+  text-decoration: null;
+}

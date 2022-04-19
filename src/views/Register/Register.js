@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { RegisterApi } from '../request/api'
-import { useHistory, Link } from 'react-router-dom'
+import { RegisterApi } from '@/request/api'
+import { useHistory, Link } from 'react-router-dom'		// useHistory也可以给组件注入路由
 import { connect } from 'react-redux'
-import logo from '../images/logo.png'
+import logo from '@/assets/images/logo.png'
+import {AlertMapDispatchToProps, showHideAlert} from '@/utils'
 
 const useStyles = makeStyles((theme) => ({
     loginPage: {
@@ -62,7 +63,7 @@ function SignIn(props) {
     // 获取路由
     const history = useHistory()
 
-    // 点击了登录
+    // 点击了注册
     function submitFn() {
         RegisterApi({
             phone: Number(phone),
@@ -70,36 +71,29 @@ function SignIn(props) {
         }).then(res => {
             if (res.errCode === 0) {
                 // 成功
-                props.showToastFn({
-                    icon: "success",
-                    title: "注册成功"
-                });
-                // 存储手机号
-                localStorage.setItem("phone", phone);
+                showHideAlert(props, {
+                    showAlert: true,
+                    alertType: "success",
+                    alertContent: "注册成功，即将返回登录页"
+                })
+                // 2秒后跳转到登录页
                 setTimeout(() => {
-                    props.hideToastFn();
-                    props.showToastFn({
-                        icon: "loading",
-                        title: "即将返回登录页"
-                    });
-
-                    // 2秒后跳转到登录页
-                    setTimeout(() => {
-                        // 返回登录页
-                        history.push('/login');
-                    }, 2000)
-                }, 1000)
+                    // 返回登录页
+                    history.push('/login');
+                }, 2000)
             } else {
-                props.showToastFn({
-                    icon: "error",
-                    title: res.message
-                });
+                showHideAlert(props, {
+                    showAlert: true,
+                    alertType: "error",
+                    alertContent: res.message
+                })
             }
         }).catch(err => {
-            props.showToastFn({
-                icon: "error",
-                title: err.response.data.message
-            });
+            showHideAlert(props, {
+                showAlert: true,
+                alertType: "error",
+                alertContent: err.response.data.message
+            })
         })
     }
 
@@ -155,18 +149,4 @@ function SignIn(props) {
     );
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        showToastFn(value) {
-            dispatch({ type: "showToastFn", value })
-            setTimeout(() => {
-                dispatch({ type: "hideToastFn" })
-            }, 2000)
-        },
-        hideToastFn() {
-            dispatch({ type: "hideToastFn" })
-        }
-    }
-}
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(null, AlertMapDispatchToProps)(SignIn)

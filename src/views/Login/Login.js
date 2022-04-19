@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { LoginApi } from '../request/api'
+import { LoginApi } from '@/request/api'
 import { useHistory, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import logo from '../images/logo.png'
+import logo from '@/assets/images/logo.png'
+import {AlertMapDispatchToProps, showHideAlert} from '@/utils'
 
 const useStyles = makeStyles((theme) => ({
   loginPage: {
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 function SignIn(props) {
   const classes = useStyles();
   // 用户名
-  const [username, setUsername] = useState(localStorage.getItem("phone") || "");
+  const [username, setUsername] = useState("");
   // 密码
   const [password, setPassword] = useState("wolfcode123");
   // 获取路由
@@ -69,37 +70,28 @@ function SignIn(props) {
       password
     }).then(res => {
       if (res.errCode === 0) {
-        // 成功
-        props.showToastFn({
-          icon: "success",
-          title: "登录成功"
-        });
+        // 成功的提示
+        showHideAlert(props, {
+          showAlert: true,
+          alertType: "success",
+          alertContent: "登录成功，即将返回首页"
+        })
         let token = res.data;
         // 存入token
         localStorage.setItem('x-auth-token', token);
+        // 2秒后跳转到首页
         setTimeout(() => {
-          props.hideToastFn();
-          props.showToastFn({
-            icon: "loading",
-            title: "即将返回首页"
-          });
-          // 2秒后跳转到首页
-          setTimeout(() => {
-            // 返回首页
-            history.push("/home");
-          }, 2000)
-        }, 1500)
-      } else {
-        props.showToastFn({
-          icon: "error",
-          title: res.message
-        });
+          // 返回首页
+          history.push("/home");
+        }, 2000)
+      }else {
+        // 失败的提示
+        showHideAlert(props, {
+          showAlert: true,
+          alertType: "error",
+          alertContent: res.message
+        })
       }
-    }).catch(err => {
-      props.showToastFn({
-        icon: "error",
-        title: err.response.data.message
-      });
     })
   }
 
@@ -114,7 +106,7 @@ function SignIn(props) {
           required
           fullWidth
           id="username"
-          placeholder="请输入手机号码"
+          placeholder="请输入用户名"
           name="username"
           autoComplete="username"
           autoFocus
@@ -141,8 +133,8 @@ function SignIn(props) {
           variant="contained"
           onClick={submitFn}
         >直接登录</Button>
-        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-          <Link to="/register" variant="body2" style={{ color: '#02369d' }}>前往注册</Link>
+        <div style={{marginTop: '20px', display: 'flex', justifyContent: 'space-between'}}>
+          <Link to="/register" variant="body2" style={{ color: '#02369d'  }}>前往注册</Link>
           <Link to="/home" variant="body2" style={{ color: '#999999' }}>返回首页</Link>
         </div>
       </form>
@@ -158,18 +150,5 @@ function SignIn(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    showToastFn(value) {
-      dispatch({ type: "showToastFn", value })
-      setTimeout(() => {
-        dispatch({ type: "hideToastFn" })
-      }, 2000)
-    },
-    hideToastFn() {
-      dispatch({ type: "hideToastFn" })
-    }
-  }
-}
 
-export default connect(null, mapDispatchToProps)(SignIn)
+export default connect(null, AlertMapDispatchToProps)(SignIn)

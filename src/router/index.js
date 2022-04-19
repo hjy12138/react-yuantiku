@@ -7,7 +7,8 @@ import App from '../App'
 import Home from '../views/Home/Home'
 import Fast from '../views/Fast/Fast'
 import User from '../views/User/User'
-
+import Login from '../views/Login/Login'
+import Register from '../views/Register/Register'
 
 const BaseRouter = () => {
   return (
@@ -19,6 +20,8 @@ const BaseRouter = () => {
               <Route exact path="/home" component={Home}></Route>
               <Route exact path="/fast" component={Fast}></Route>
               <Route exact path="/user" component={User}></Route>
+              <Route exact path="/login" component={Login}></Route>
+              <Route exact path="/register" component={Register}></Route>
              
             </Switch>
           </App>
