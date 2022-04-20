@@ -20,6 +20,7 @@ export default function Tabbar() {
   const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [showTabbar, setshowTabbar] = React.useState(true);
 
   // 在赋值给value之前，我们需要先做判断，根据当前的路由地址，来决定到底myindex等于多少
   // componentDidMount
@@ -29,25 +30,26 @@ export default function Tabbar() {
     switch (history.location.pathname) {
       case "/home":
         setValue(0);
-        
+        setshowTabbar(true);
         break;
       case "/fast":
         setValue(1);
-        
+        setshowTabbar(true);
         break;
       case "/user":
         setValue(2);
-        
+        setshowTabbar(true);
         break;
       default:
         setValue(0);
-        
+        setshowTabbar(false);
         break;
     }
   }, [history.location.pathname]);  // 检测路由的更新
   return (
     <BottomNavigation
       value={value}
+      style={{display:showTabbar?'flex':'none'}}
       onChange={(event, newValue) => {
         setValue(newValue);
         switch (newValue) {

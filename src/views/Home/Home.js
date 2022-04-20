@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Loading from "@/components/Loading/Loading";
 import xiaolang from '@/assets/images/home/xiaolang.png'
 import books from '@/assets/images/home/books.png'
 import examination from '@/assets/images/home/examination.png'
@@ -12,7 +12,7 @@ import List from '@/components/Home/List/List'
 
 class Home extends Component {
   state = {
-    
+    showLoading: false,
     exam:{},
     // 学科题库列表
     exemItems:[],
@@ -63,9 +63,7 @@ class Home extends Component {
           <span>坚持每一天，成长看得见</span>
         </div>
         <List listArr={this.state.exemItems} />
-       
-        
-        
+        <Loading showLoading={this.state.showLoading} />
       </div>
     );
   }
@@ -95,7 +93,9 @@ class Home extends Component {
         // console.log(err.response.data.errCode)
         if(err.response.data.errCode===1002){
           // 显示loading
-         
+          this.setState({
+            showLoading: true,
+          });
           // 跳转到登录页
           setTimeout(() => {
             this.props.history.push("/login");
@@ -104,7 +104,9 @@ class Home extends Component {
       })
     } else {
       // 显示loading
-     
+      this.setState({
+        showLoading: true,
+      });
       // 跳转到登录页
       setTimeout(() => {
         this.props.history.push("/login");
