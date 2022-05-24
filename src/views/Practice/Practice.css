@@ -1,8 +1,5 @@
-@import "http://at.alicdn.com/t/font_2390471_jvvzeh530r.css";
 .Practice {
   width: 100%;
-  min-height: 100vh;
-  background: #fff;
   overflow: hidden;
 }
 .Practice .top {
@@ -14,8 +11,8 @@
   align-items: center;
 }
 .Practice .top .MuiSvgIcon-root {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   margin-right: 14px;
 }
 .Practice .top .top_index b {
@@ -27,27 +24,22 @@
   left: 0;
   top: 0;
   transition: left 0.5s linear;
+  height: 300px;
 }
-.Practice .timu .timu_li {
+.Practice .timu li {
   float: left;
   width: 100vw;
-  padding: 60px 50px 0;
-  box-sizing: border-box;
-  border-bottom: 0;
 }
 .Practice .timu_title {
   display: flex;
   justify-content: space-between;
+  padding: 60px 50px 0;
   margin-bottom: 70px;
 }
 .Practice .timu_title span {
   width: 80px;
   height: 50px;
-  background: #2e57ff;
-  font-size: 32px;
-  color: #fff;
-  text-align: center;
-  line-height: 50px;
+  background: #2e9aff;
   margin-right: 20px;
 }
 .Practice .timu_title p {
@@ -57,53 +49,27 @@
   line-height: 56px;
 }
 .Practice .timu_textarea {
-  width: 100%;
+  width: 1025px;
   height: 600px;
   padding: 68px 71px;
   box-sizing: border-box;
+  background: #f0f0f0;
   display: block;
-  margin-bottom: 39px;
-  background: #f0f0f0;
-}
-.Practice .timu_textarea::-webkit-input-placeholder {
-  font-size: 38px;
-  color: #999999;
-}
-.Practice .timu_options li {
-  width: 1025px;
-  background: #f0f0f0;
-  padding: 50px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-}
-.Practice .timu_options li .iconfont {
-  padding-top: 10px;
-}
-.Practice .timu_options li .iconfont.icon-normal {
-  color: #333;
-}
-.Practice .timu_options li .iconfont.icon-danxuanxiangxuanzhong {
-  color: #2E57FF;
-}
-.Practice .timu_options li span {
-  flex: 1;
-  margin-left: 36px;
+  margin: 0 auto 39px;
 }
 .Practice .timu_tips {
-  font-size: 30px;
-  color: #999999;
-  margin-bottom: 60px;
+  margin-left: 40px;
 }
 .Practice .timu_submit {
+  margin-left: 60px;
+  margin-top: 40px;
   width: 250px;
   height: 96px;
   background: #ffffff;
   border: 2px solid #2e57ff;
-  font-size: 40px;
-  color: #2e57ff;
   border-radius: 8px;
+  color: #2e57ff;
+  font-size: 40px;
   text-align: center;
   line-height: 96px;
   margin-bottom: 69px;
@@ -111,6 +77,7 @@
 .Practice .timu_answer {
   display: flex;
   margin-bottom: 69px;
+  margin-left: 60px;
   justify-content: space-between;
 }
 .Practice .timu_answer span {
@@ -123,7 +90,4 @@
   flex: 1;
   color: #2e57ff;
   line-height: 50px;
-}
-.Practice .timu_analysis p {
-  color: #333;
 }
