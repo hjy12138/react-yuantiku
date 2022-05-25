@@ -3,7 +3,8 @@ import AcUnitIcon from '@material-ui/icons/AcUnit';
 import './Practice.less'
 import Goback from '@/components/Goback/Goback';
 import Wenda from '@/components/Practice/Wenda'
-
+import Danxuan from '@/components/Practice/Danxuan'
+import {GetTimuListApi} from '@/request/api'
 // 手指触摸点
 let startX = -1;
 // 手指松开点
@@ -12,7 +13,7 @@ let endX = -1;
 let liIndex = 0;
 export default class Practice extends Component {
   state={
-    timuArr:[1,2,3,4,5],
+    timuArr:[],
     ulLeft: 0,
   };
   
@@ -35,13 +36,22 @@ export default class Practice extends Component {
         onTouchEnd={this.handleTouchEnd.bind(this)}
         >
           {
-            this.state.timuArr.map((item,index)=><li key={index}><Wenda /></li>)
+            this.state.timuArr.map((item,index)=><li className='timu_li' key={index}><Danxuan timu={item}/></li>)
           }
 
         </ul>
         <Goback />
       </div>
     )
+  }
+  componentDidMount(){
+    // console.log(this.props.location.state)
+    let obj = this.props.location.state;
+    GetTimuListApi(obj).then(res=>{
+      if(res.errCode===0){
+        this.setState({timuArr: res.data})
+      }
+    })
   }
 
    // 手指触摸到屏幕
