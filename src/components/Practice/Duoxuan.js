@@ -5,7 +5,7 @@ import { showHideAlert1, AlertMapDispatchToProps } from '@/utils';
 
 import { connect } from "react-redux";
 
-class Danxuan extends Component {
+class Duoxuan extends Component {
     state = {
         option: "",
         ifShowAnswer: false
@@ -14,9 +14,9 @@ class Danxuan extends Component {
         let timu = this.props.timu;
         let myarr = JSON.parse(timu.optionContent || '[]');
         return (
-            <div className='danxuan' style={{display:timu.questionType ==='one'?'block':'none'}}>
+            <div className='danxuan' style={{display:timu.questionType ==='many'?'block':'none'}}>
                 <div className='timu_title'>
-                    <span>单选</span>
+                    <span>多选</span>
                     <p>{timu.title}</p>
                 </div>
                 <ul className='timu_options'>
@@ -69,4 +69,4 @@ class Danxuan extends Component {
         })
     }
 }
-export default connect(null, AlertMapDispatchToProps)(Danxuan)
+export default connect(null, AlertMapDispatchToProps)(Duoxuan)

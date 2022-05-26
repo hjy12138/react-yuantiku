@@ -4,6 +4,8 @@ import './Practice.less'
 import Goback from '@/components/Goback/Goback';
 import Wenda from '@/components/Practice/Wenda'
 import Danxuan from '@/components/Practice/Danxuan'
+import Panduan from '@/components/Practice/Panduan';
+import Duoxuan from '@/components/Practice/Duoxuan';
 import {GetTimuListApi} from '@/request/api'
 // 手指触摸点
 let startX = -1;
@@ -36,7 +38,12 @@ export default class Practice extends Component {
         onTouchEnd={this.handleTouchEnd.bind(this)}
         >
           {
-            this.state.timuArr.map((item,index)=><li className='timu_li' key={index}><Danxuan timu={item}/></li>)
+            this.state.timuArr.map((item,index)=><li className='timu_li' key={index}>
+              <Wenda timu={item} actionCode={this.props.location.state.actionCode} />
+              <Danxuan timu={item} actionCode={this.props.location.state.actionCode}/>
+              <Duoxuan timu={item} actionCode={this.props.location.state.actionCode}/>
+              <Panduan timu={item} actionCode={this.props.location.state.actionCode}/>
+              </li>)
           }
 
         </ul>
